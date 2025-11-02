@@ -30,6 +30,9 @@ public class PrimaryController {
     private TextField nameTextField;
 
     @FXML
+    private TextField PhoneTextField;
+
+    @FXML
     private TextArea outputTextArea;
 
     @FXML
@@ -84,9 +87,7 @@ public class PrimaryController {
     {
         key = false;
 
-        //asynchronously retrieve all documents
         ApiFuture<QuerySnapshot> future =  DemoApp.fstore.collection("Persons").get();
-        // future.get() blocks on response
         List<QueryDocumentSnapshot> documents;
         try
         {
@@ -97,11 +98,11 @@ public class PrimaryController {
                 listOfUsers.clear();
                 for (QueryDocumentSnapshot document : documents)
                 {
-                    outputTextArea.setText(outputTextArea.getText()+ document.getData().get("Name")+ " , Age: "+
-                            document.getData().get("Age")+ " \n ");
-                    System.out.println(document.getId() + " => " + document.getData().get("Name"));
-                    person  = new Person(String.valueOf(document.getData().get("Name")),
-                            Integer.parseInt(document.getData().get("Age").toString()));
+                    String name = String.valueOf(document.getData().get("Name"));
+                    int age = Integer.parseInt(document.getData().get("Age").toString());
+                    Object phoneobj=document.getData().get("Phonenumber");
+                    String phone=phoneobj.toString();
+                    outputTextArea.appendText(name + ", Age: " + age + ", Phone: " + phone + "\n");
                     listOfUsers.add(person);
                 }
             }
@@ -150,6 +151,7 @@ public class PrimaryController {
         Map<String, Object> data = new HashMap<>();
         data.put("Name", nameTextField.getText());
         data.put("Age", Integer.parseInt(ageTextField.getText()));
+        data.put("Phonenumber", PhoneTextField.getText());
 
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
