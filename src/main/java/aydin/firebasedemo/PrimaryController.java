@@ -121,7 +121,7 @@ public class PrimaryController {
 
     public boolean registerUser() {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail("user222@example.com")
+                .setEmail("user2232@example.com")
                 .setEmailVerified(false)
                 .setPassword("secretPassword")
                 .setPhoneNumber("+11234567890")
@@ -153,5 +153,6 @@ public class PrimaryController {
 
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
+        System.out.println("Write Success");
     }
 }

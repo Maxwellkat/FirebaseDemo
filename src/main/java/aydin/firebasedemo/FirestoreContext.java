@@ -18,8 +18,9 @@ public class FirestoreContext {
             FileInputStream serviceAccount =
                     new FileInputStream("src/main/resources/aydin/firebasedemo/key.json");
 
-            FirebaseOptions options = FirebaseOptions.builder()
+            FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://fir-demo-865e5-default-rtdb.firebaseio.com")
                     .build();
 
             FirebaseApp.initializeApp(options);
